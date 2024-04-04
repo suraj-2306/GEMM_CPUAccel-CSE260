@@ -20,4 +20,4 @@ do
 	printf '%d\t%s\n' $size $AVG >> data.txt
 done
 
-printf 'Results saved in data.txt'
+printf 'Results saved in data.txt\n'
