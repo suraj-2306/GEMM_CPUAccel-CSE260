@@ -1,5 +1,5 @@
                     CSE 260, Parallel Computation
-                            (Fall 2022)
+                            (Spring 2024)
            Department of Computer Science and Engineering 	
                  University of California, San Diego 	
 
