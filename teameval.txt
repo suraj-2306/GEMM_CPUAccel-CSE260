@@ -13,21 +13,21 @@ If you worked alone leave column B blank
 
 (1) List the names of your team members:
 
-A:
+A: Suraj Sathya Prakash
 
  
-B:
+B: Kumar Divij
 
  
  
 (2) Estimate how much time each team member devoted to this project, in HOURS.
 
   	                        A 	       B
-meetings 	  	  	 
-coding 	  	  	 
-writeup 	  	  	 
-planning (alone) 	  	  	 
-total (including meetings) 	  	  	 
+meetings 	  	  	         
+coding 	  	  	          
+writeup 	  	  	        
+planning (alone) 	  	  	
+total (including meetings)
 
 
 (3) Discuss the following.
