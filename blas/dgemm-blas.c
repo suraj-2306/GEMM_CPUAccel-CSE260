@@ -10,13 +10,14 @@
 #include "cblas.h"
 #endif
 
-const char* dgemm_desc = "Reference dgemm.";
+const char *dgemm_desc = "Reference dgemm.";
 
 /* This routine performs a dgemm operation
  *  C := C + A * B
  * where A, B, and C are N-by-N matrices stored in row-major format.
- * On exit, A and B maintain their input values.    
- * This function wraps a call to the BLAS-3 routine DGEMM, via the CBLAS interfce */
+ * On exit, A and B maintain their input values.
+ * This function wraps a call to the BLAS-3 routine DGEMM, via the CBLAS
+ * interfce */
 /*
  * Users of the CBLAS interface: be aware that the CBLAS are just a C
  * interface to the BLAS, which is based on the FORTRAN standard and
@@ -28,20 +29,18 @@ const char* dgemm_desc = "Reference dgemm.";
 /* Set up the call for dgemm, to perform the  matrix  multiplication
  * on a square matrix
  *
-*/
-void square_dgemm (int N, double* A, double* B, double* C)
-{
-    const double Alpha = 1.0;
-    const double Beta  = 1.0;
-    const int M = N, K=N;
-    const int LDA = N, LDB = N, LDC = N;
-    const enum CBLAS_TRANSPOSE transA = CblasNoTrans;
-    const enum CBLAS_TRANSPOSE transB = CblasNoTrans;
-    /* Don't change this call */
+ */
+void square_dgemm(int N, double *A, double *B, double *C) {
+  const double Alpha = 1.0;
+  const double Beta = 1.0;
+  const int M = N, K = N;
+  const int LDA = N, LDB = N, LDC = N;
+  const enum CBLAS_TRANSPOSE transA = CblasNoTrans;
+  const enum CBLAS_TRANSPOSE transB = CblasNoTrans;
+  /* Don't change this call */
 #if OPENBLAS_SINGLETHREAD
-    //    openblas_set_num_threads(1);
+  //    openblas_set_num_threads(1);
 #endif
-    cblas_dgemm( CblasRowMajor, transA, transB, M, N, K,
-                 Alpha, A, LDA, B, LDB, Beta, C, LDC );
-	    
+  cblas_dgemm(CblasRowMajor, transA, transB, M, N, K, Alpha, A, LDA, B, LDB,
+              Beta, C, LDC);
 }
