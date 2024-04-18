@@ -82,7 +82,17 @@ const char *dgemm_desc = "my blislab ";
  *     0 0 0 0
  */
 static inline void packA_mcxkc_d(int m, int k, double *XA, int ldXA,
-                                 double *packA) {}
+                                 double *packA) 
+{
+	int i,j;
+	for(i=0;i<m;i++)
+	{
+		for(j=0;j<k;j++)
+		{
+			packA[k*i+j] = XA[i*ldXA+j];
+		}
+	}
+}
 
 /*
  * --------------------------------------------------------------------------
@@ -118,12 +128,23 @@ static inline void packA_mcxkc_d(int m, int k, double *XA, int ldXA,
  */
 static inline void packB_kcxnc_d(int n, int k, double *XB,
                                  int ldXB, // ldXB is the original k
-                                 double *packB) {}
+                                 double *packB) 
+{
+	int i,j;
+	for(i=0;i<k;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			packB[i*n+j] = XB[i*ldXB + j];
+		}
+	}
+}
 
 /*
  * --------------------------------------------------------------------------
  */
 
+//#define NOPACK
 static inline void bl_macro_kernel(int m, int n, int k, const double *packA,
                                    const double *packB, double *C, int ldc) {
   int i, j;
@@ -131,6 +152,7 @@ static inline void bl_macro_kernel(int m, int n, int k, const double *packA,
 
   for (i = 0; i < m; i += DGEMM_MR) {   // 2-th loop around micro-kernel
     for (j = 0; j < n; j += DGEMM_NR) { // 1-th loop around micro-kernel
+	#ifdef NOPACK
       (*bl_micro_kernel)(
           k, min(m - i, DGEMM_MR), min(n - j, DGEMM_NR),
           &packA[i * ldc], // assumes sq matrix, otherwise use lda
@@ -140,6 +162,17 @@ static inline void bl_macro_kernel(int m, int n, int k, const double *packA,
           //			      &packA[ i * k ],
           //			      &packB[ j * k ],
           &C[i * ldc + j], (unsigned long long)ldc, &aux);
+	#else
+      (*bl_micro_kernel)(
+          k, min(m - i, DGEMM_MR), min(n - j, DGEMM_NR),
+          //&packA[i * ldc], // assumes sq matrix, otherwise use lda
+          //&packB[j],       //
+
+          // what you should use after real packing routine implmemented
+          			      &packA[ i * k ],
+          			      &packB[ j * k ],
+          &C[i * ldc + j], (unsigned long long)ldc, &aux);
+	#endif
     } // 1-th loop around micro-kernel
   }   // 2-th loop around micro-kernel
 }
@@ -153,13 +186,20 @@ void bl_dgemm(int m, int n, int k, double *XA, int lda, double *XB, int ldb,
   //
   // FIXME undef NOPACK when you implement packing
   //
-#define NOPACK
 #ifndef NOPACK
   packA = bl_malloc_aligned(DGEMM_KC, (DGEMM_MC / DGEMM_MR + 1) * DGEMM_MR,
                             sizeof(double));
   packB = bl_malloc_aligned(DGEMM_KC, (DGEMM_NC / DGEMM_NR + 1) * DGEMM_NR,
                             sizeof(double));
 #endif
+  //Testing begin
+  //double *packX;
+  //packX = bl_malloc_aligned(DGEMM_KC, (DGEMM_MC / DGEMM_MR + 1) * DGEMM_MR,
+  //                           sizeof(double));
+  //printf("Hello\n");
+  //printf("%p\n",packX);
+  //fflush(stdout);
+  //testing end
   for (ic = 0; ic < m; ic += DGEMM_MC) { // 5-th loop around micro-kernel
     ib = min(m - ic, DGEMM_MC);
     for (pc = 0; pc < k; pc += DGEMM_KC) { // 4-th loop around micro-kernel

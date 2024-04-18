@@ -8,6 +8,7 @@
 //
 // C-based micorkernel
 //
+//#define NOPACK
 void bl_dgemm_ukr(int k, int m, int n, double *a, double *b, double *c,
                   unsigned long long ldc, aux_t *data) {
   int l, j, i;
@@ -20,7 +21,11 @@ void bl_dgemm_ukr(int k, int m, int n, double *a, double *b, double *c,
         // cse260 - you can modify the leading indice to DGEMM_NR and DGEMM_MR
         // as appropriate
         //
+	#ifdef NOPACK
         c(i, j, ldc) += a(i, l, ldc) * b(l, j, ldc);
+	#else
+        c(i, j, ldc) += a(i, l, k) * b(l, j, n);
+	#endif
       }
     }
   }

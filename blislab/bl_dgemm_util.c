@@ -65,6 +65,17 @@ double *bl_malloc_aligned(
         exit( 1 );    
     }
 
+    //Testing
+    //int i;
+    //printf("--Begin-- align_size=%d size=%d m=%d n=%d\n",GEMM_SIMD_ALIGN_SIZE,size,m,n);
+    //for(i=0; i< m*n; i++)
+    //{
+    //        //printf("(%d)\t%p\t%f\n",i,ptr+i,*(ptr+i));
+    //        printf("(%d)\t%p\t%f\n",i,ptr+i,*(ptr+i));
+    //}
+    //printf("--End--\n");
+    //fflush(stdout);
+
     return ptr;
 }
 
