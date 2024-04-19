@@ -62,11 +62,24 @@ extern "C" {
 //#define DGEMM_NC 64
 //#define DGEMM_MR 4
 //#define DGEMM_NR 4
-#define DGEMM_KC 64
-#define DGEMM_MC 64
-#define DGEMM_NC 64
-#define DGEMM_MR 16
-#define DGEMM_NR 16
+
+//#define DGEMM_KC 64
+//#define DGEMM_MC 64
+//#define DGEMM_NC 64
+//#define DGEMM_MR 16
+//#define DGEMM_NR 16
+
+#define DGEMM_KC 2573
+#define DGEMM_MC 1629
+#define DGEMM_NC 80
+#define DGEMM_MR 5
+#define DGEMM_NR 6
+
+//#define DGEMM_KC 512
+//#define DGEMM_MC 512
+//#define DGEMM_NC 512
+//#define DGEMM_MR 5
+//#define DGEMM_NR 6
 #endif
 
 #define BL_MICRO_KERNEL bl_dgemm_ukr

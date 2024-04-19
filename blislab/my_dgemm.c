@@ -89,7 +89,8 @@ static inline void packA_mcxkc_d(int m, int k, double *XA, int ldXA,
 	{
 		for(j=0;j<k;j++)
 		{
-			packA[k*i+j] = XA[i*ldXA+j];
+			//packA[k*i+j] = XA[i*ldXA+j];
+			packA[m*j+i] = XA[i*ldXA+j];
 		}
 	}
 }
