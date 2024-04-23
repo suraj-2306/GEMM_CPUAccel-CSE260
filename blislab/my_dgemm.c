@@ -82,17 +82,33 @@ const char *dgemm_desc = "my blislab ";
  *     q r s t
  *     0 0 0 0
  */
-static inline void packA_mcxkc_d(int m, int k, double *XA, int ldXA,
-                                 double *packA) 
+//static inline void packA_mcxkc_d(int m, int k, double *restrict XA, int ldXA,
+static void packA_mcxkc_d(int m, int k, double *restrict XA, int ldXA,
+                                 double *restrict packA) 
 {
 	memset(packA,0,DGEMM_MR*DGEMM_KC*sizeof(double));
 	int i,j;
-	for(i=0;i<m;i++)
+	for(j=0;j<k;j++)
 	{
-		for(j=0;j<k;j++)
-		{
-			//packA[k*i+j] = XA[i*ldXA+j];
-			packA[m*j+i] = XA[i*ldXA+j];
+		//for(i=0;i<m;i++)
+		//{
+		//	packA[m*j+i] = XA[i*ldXA+j];
+		//}
+		if(m>>3 == 1){
+			*(packA + 8*j+0) = *(XA + 0*ldXA+j);
+			*(packA + 8*j+1) = *(XA + 1*ldXA+j);
+			*(packA + 8*j+2) = *(XA + 2*ldXA+j);
+			*(packA + 8*j+3) = *(XA + 3*ldXA+j);
+			*(packA + 8*j+4) = *(XA + 4*ldXA+j);
+			*(packA + 8*j+5) = *(XA + 5*ldXA+j);
+			*(packA + 8*j+6) = *(XA + 6*ldXA+j);
+			*(packA + 8*j+7) = *(XA + 7*ldXA+j);
+		}
+		else {
+			for(i=0;i<m;i++)
+			{
+				*(packA  + m*j+i ) = *(XA + i*ldXA+j);
+			}
 		}
 	}
 	//for(i=m;i<DGEMM_MR;i++)
@@ -145,17 +161,26 @@ static inline void packA_mcxkc_d(int m, int k, double *XA, int ldXA,
  *     ^^^^^
  *     each call packs one subpanel
  */
-static inline void packB_kcxnc_d(int n, int k, double *XB,
+//static inline void packB_kcxnc_d(int n, int k, double *restrict XB,
+static void packB_kcxnc_d(int n, int k, double *restrict XB,
                                  int ldXB, // ldXB is the original k
-                                 double *packB) 
+                                 double *restrict packB) 
 {
 	memset(packB,0,DGEMM_NR*DGEMM_KC*sizeof(double));
 	int i,j;
 	for(i=0;i<k;i++)
 	{
-		for(j=0;j<n;j++)
-		{
-			packB[i*n+j] = XB[i*ldXB + j];
+		if(n>>2 == 1) {
+			*(packB + i*4+0) = *(XB + i*ldXB + 0);
+			*(packB + i*4+1) = *(XB + i*ldXB + 1);
+			*(packB + i*4+2) = *(XB + i*ldXB + 2);
+			*(packB + i*4+3) = *(XB + i*ldXB + 3);
+		}
+		else {
+			for(j=0;j<n;j++)
+			{
+				*(packB + i*n+j) = *(XB + i*ldXB + j);
+			}
 		}
 	}
 }
@@ -165,8 +190,9 @@ static inline void packB_kcxnc_d(int n, int k, double *XB,
  */
 
 //#define NOPACK
-static inline void bl_macro_kernel(int m, int n, int k, const double *packA,
-                                   const double *packB, double *C, int ldc) {
+//static inline void bl_macro_kernel(int m, int n, int k, const double *restrict packA,
+static void bl_macro_kernel(int m, int n, int k, const double *restrict packA,
+                                   const double *restrict packB, double *restrict C, int ldc) {
   int i, j;
   aux_t aux;
 
@@ -175,13 +201,13 @@ static inline void bl_macro_kernel(int m, int n, int k, const double *packA,
 	#ifdef NOPACK
       (*bl_micro_kernel)(
           k, min(m - i, DGEMM_MR), min(n - j, DGEMM_NR),
-          &packA[i * ldc], // assumes sq matrix, otherwise use lda
-          &packB[j],       //
+          packA+i * ldc, // assumes sq matrix, otherwise use lda
+          packB+j,       //
 
           // what you should use after real packing routine implmemented
           //			      &packA[ i * k ],
           //			      &packB[ j * k ],
-          &C[i * ldc + j], (unsigned long long)ldc, &aux);
+          C+i * ldc + j, (unsigned long long)ldc, &aux);
 	#else
       //printf("\nMatrix Multiply\n");
       //printMat(DGEMM_MR,DGEMM_KC,"packA",&packA[i*k]);
@@ -193,19 +219,20 @@ static inline void bl_macro_kernel(int m, int n, int k, const double *packA,
 
           // what you should use after real packing routine implmemented
           			      //&packA[ i * k ],
-          			      &packA[ i * DGEMM_KC ],
+          			      packA+ i * DGEMM_KC ,
           			      //&packB[ j * k ],
-          			      &packB[ j * DGEMM_KC ],
-          &C[i * ldc + j], (unsigned long long)ldc, &aux);
+          			      packB+ j * DGEMM_KC ,
+          C+i * ldc + j, (unsigned long long)ldc, &aux);
 	#endif
     } // 1-th loop around micro-kernel
   }   // 2-th loop around micro-kernel
 }
 
-void bl_dgemm(int m, int n, int k, double *XA, int lda, double *XB, int ldb,
-              double *C, int ldc) {
+void bl_dgemm(int m, int n, int k, double *restrict XA, int lda, double *restrict XB, int ldb,
+              double *restrict C, int ldc) {
   int ic, ib, jc, jb, pc, pb;
-  double *packA, *packB;
+  double *packA;
+  double *packB;
 
   // Allocate packing buffers
   //
@@ -236,10 +263,10 @@ void bl_dgemm(int m, int n, int k, double *XA, int lda, double *XB, int ldb,
         packA_mcxkc_d(
             min(ib - i, DGEMM_MR),    /* m */
             pb,                       /* k */
-            &XA[pc + lda * (ic + i)], /* XA - start of micropanel in A */
+            XA+pc + lda * (ic + i), /* XA - start of micropanel in A */
             k,                        /* ldXA */
             //&packA[0 * DGEMM_MC * pb + i * pb] /* packA */);
-            &packA[0 * DGEMM_MC * pb + i * DGEMM_KC] /* packA */);
+            packA+0 * DGEMM_MC * pb + i * DGEMM_KC /* packA */);
       //printf("\n%d %d %d %d %p\n",min(ib - i, DGEMM_MR),pb,DGEMM_MR,DGEMM_KC,&packA[0 * DGEMM_MC * pb + i * DGEMM_KC]);
       //printMat(DGEMM_MR,DGEMM_KC,"packA",&packA[0 * DGEMM_MC * pb + i * DGEMM_KC]);
       }
@@ -250,21 +277,22 @@ void bl_dgemm(int m, int n, int k, double *XA, int lda, double *XB, int ldb,
 #ifdef NOPACK
         packB = &XB[ldb * pc + jc];
 #else
-        for (j = 0; j < jb; j += DGEMM_NR) {
-          packB_kcxnc_d(
-              min(jb - j, DGEMM_NR) /* n */, pb /* k */,
-              &XB[ldb * pc + jc +
-                  j] /* XB - starting row and column for this panel */,
-              n,             // should be ldXB instead /* ldXB */
-              //&packB[j * pb] /* packB */
-              &packB[j * DGEMM_KC] /* packB */
-          );
-      //printf("\n%d %d %d %d %p\n",pb, min(jb - j, DGEMM_NR), DGEMM_KC, DGEMM_NR, &packB[j * pb]);
-      //printMat(DGEMM_KC,DGEMM_NR,"packB",&packB[j * pb]);
-        }
+	//if(ic==0) {
+        	for (j = 0; j < jb; j += DGEMM_NR) {
+        	  packB_kcxnc_d(
+        	      min(jb - j, DGEMM_NR) /* n */, pb /* k */,
+        	      //&XB[ldb * pc + jc +j] /* XB - starting row and column for this panel */,
+        	      XB + ldb * pc + jc +j /* XB - starting row and column for this panel */,
+        	      n,             // should be ldXB instead /* ldXB */
+        	      //&packB[j * pb] /* packB */
+        	      packB+j * DGEMM_KC /* packB */
+        	  );
+        	}
+	//}
 #endif
 
-        bl_macro_kernel(ib, jb, pb, packA, packB, &C[ic * ldc + jc], ldc);
+        //bl_macro_kernel(ib, jb, pb, packA, packB, &C[ic * ldc + jc], ldc);
+        bl_macro_kernel(ib, jb, pb, packA, packB, C + ic * ldc + jc, ldc);
       } // End 3.rd loop around micro-kernel
     }   // End 4.th loop around micro-kernel
   }     // End 5.th loop around micro-kernel
@@ -275,6 +303,6 @@ void bl_dgemm(int m, int n, int k, double *XA, int lda, double *XB, int ldb,
 #endif
 }
 
-void square_dgemm(int lda, double *A, double *B, double *C) {
+void square_dgemm(int lda, double *restrict A, double *restrict B, double *restrict C) {
   bl_dgemm(lda, lda, lda, A, lda, B, lda, C, lda);
 }

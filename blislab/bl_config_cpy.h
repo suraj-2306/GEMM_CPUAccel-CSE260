@@ -29,11 +29,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * bl_dgemm_kernel.h
+ * bl_config.h
  *
  *
  * Purpose:
- * this header file contains all function prototypes.
+ * this header file contains configuration parameters.
  *
  * Todo:
  *
@@ -43,15 +43,8 @@
  * 
  * */
 
-
-#ifndef BLISLAB_DGEMM_KERNEL_H
-#define BLISLAB_DGEMM_KERNEL_H
-
-#include "bl_config.h"
-
-#include <stdio.h>
-#include <arm_sve.h>
-
+#ifndef BLISLAB_CONFIG_H
+#define BLISLAB_CONFIG_H
 
 // Allow C++ users to include this header file in their source code. However,
 // we make the extern "C" conditional on whether we're using a C++ compiler,
@@ -60,40 +53,48 @@
 extern "C" {
 #endif
 
-typedef unsigned long long dim_t;
+#define GEMM_SIMD_ALIGN_SIZE 32
 
-struct aux_s {
-    double *b_next;
-    float  *b_next_s;
-    char   *flag;
-    int    pc;
-    int    m;
-    int    n;
-};
-typedef struct aux_s aux_t;
+#if 1
+ // #define DGEMM_KC 384
+//#define DGEMM_KC 64
+//#define DGEMM_MC 64
+//#define DGEMM_NC 64
+//#define DGEMM_MR 4
+//#define DGEMM_NR 4
 
-void bl_dgemm_ukr( int k,
-		   int m,
-		   int n,
-        double *restrict a,
-        double *restrict b,
-        double *restrict c,
-        unsigned long long ldc,
-        aux_t* data );
+//#define DGEMM_KC 64
+//#define DGEMM_MC 64
+//#define DGEMM_NC 64
+//#define DGEMM_MR 16
+//#define DGEMM_NR 16
 
-static void (*bl_micro_kernel) (
-        int    k,
-	int    m,
-	int    n,
-        const double *restrict a,
-        const double *restrict b,
-        const double *restrict c,
-        unsigned long long ldc,
-        aux_t  *aux
-        ) = {
-        BL_MICRO_KERNEL
-};
+//#define DGEMM_KC 2573
+//#define DGEMM_MC 1629
+//#define DGEMM_NC 80
+//#define DGEMM_MR 5
+//#define DGEMM_NR 6
 
+//#define DGEMM_KC 512
+//#define DGEMM_MC 512
+//#define DGEMM_NC 512
+//#define DGEMM_MR 5
+//#define DGEMM_NR 6
+
+//#define DGEMM_KC 512
+//#define DGEMM_MC 512
+//#define DGEMM_NC 512
+//#define DGEMM_MR 5
+//#define DGEMM_NR 6
+
+#define DGEMM_MC 256
+#define DGEMM_KC 256
+#define DGEMM_NC 256
+#define DGEMM_MR 8
+#define DGEMM_NR 4
+#endif
+
+#define BL_MICRO_KERNEL bl_dgemm_ukr
 
 
 // End extern "C" construct block.
@@ -102,4 +103,3 @@ static void (*bl_micro_kernel) (
 #endif
 
 #endif
-

@@ -87,8 +87,8 @@ extern "C" {
 //#define DGEMM_MR 5
 //#define DGEMM_NR 6
 
-#define DGEMM_MC 256
-#define DGEMM_KC 256
+#define DGEMM_MC 512
+#define DGEMM_KC 64
 #define DGEMM_NC 256
 #define DGEMM_MR 8
 #define DGEMM_NR 4
@@ -103,3 +103,104 @@ extern "C" {
 #endif
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
