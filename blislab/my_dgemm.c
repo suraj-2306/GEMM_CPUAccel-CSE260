@@ -85,7 +85,7 @@ const char *dgemm_desc = "my blislab ";
 static inline void packA_mcxkc_d(int m, int k, double *XA, int ldXA,
                                  double *packA) 
 {
-	//memset(packA,0,DGEMM_MR*DGEMM_KC*sizeof(double));
+	memset(packA,0,DGEMM_MR*DGEMM_KC*sizeof(double));
 	int i,j;
 	for(i=0;i<m;i++)
 	{
@@ -149,7 +149,7 @@ static inline void packB_kcxnc_d(int n, int k, double *XB,
                                  int ldXB, // ldXB is the original k
                                  double *packB) 
 {
-	//memset(packB,0,DGEMM_NR*DGEMM_KC*sizeof(double));
+	memset(packB,0,DGEMM_NR*DGEMM_KC*sizeof(double));
 	int i,j;
 	for(i=0;i<k;i++)
 	{
