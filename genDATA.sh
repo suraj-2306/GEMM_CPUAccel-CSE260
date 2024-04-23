@@ -2,6 +2,7 @@
 #Generate data.txt
 #May need to set execute permission: "chmod +x genDATA.sh"
 matrix_sizes=(32 64 128 256 511 512 513 1023 1024 1025 2047 2048)
+#matrix_sizes=(1 5 9 11 13)
 
 > data.txt
 

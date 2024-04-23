@@ -48,7 +48,8 @@
 
 #include "bl_dgemm.h"
 #include "bl_dgemm_kernel.h"
-
+#include "../debugMat.h"
+#include "../debugMat.cpp"
 const char *dgemm_desc = "my blislab ";
 
 /*
@@ -84,6 +85,7 @@ const char *dgemm_desc = "my blislab ";
 static inline void packA_mcxkc_d(int m, int k, double *XA, int ldXA,
                                  double *packA) 
 {
+	//memset(packA,0,DGEMM_MR*DGEMM_KC*sizeof(double));
 	int i,j;
 	for(i=0;i<m;i++)
 	{
@@ -93,6 +95,22 @@ static inline void packA_mcxkc_d(int m, int k, double *XA, int ldXA,
 			packA[m*j+i] = XA[i*ldXA+j];
 		}
 	}
+	//for(i=m;i<DGEMM_MR;i++)
+	//{
+	//	for(j=0;j<k;j++)
+	//	{
+	//		//packA[k*i+j] = XA[i*ldXA+j];
+	//		packA[k*i+j] = 0;
+	//	}
+	//}
+	//for(j=k;j<DGEMM_KC;j++)
+	//{
+	//	for(i=0;i<DGEMM_MR;i++)
+	//	{
+	//		//packA[k*i+j] = XA[i*ldXA+j];
+	//		packA[DGEMM_MR*j+i] = 0;
+	//	}
+	//}
 }
 
 /*
@@ -131,6 +149,7 @@ static inline void packB_kcxnc_d(int n, int k, double *XB,
                                  int ldXB, // ldXB is the original k
                                  double *packB) 
 {
+	//memset(packB,0,DGEMM_NR*DGEMM_KC*sizeof(double));
 	int i,j;
 	for(i=0;i<k;i++)
 	{
@@ -164,14 +183,19 @@ static inline void bl_macro_kernel(int m, int n, int k, const double *packA,
           //			      &packB[ j * k ],
           &C[i * ldc + j], (unsigned long long)ldc, &aux);
 	#else
+      //printf("\nMatrix Multiply\n");
+      //printMat(DGEMM_MR,DGEMM_KC,"packA",&packA[i*k]);
+      //printMat(DGEMM_KC,DGEMM_NR,"packB",&packB[j*k]);
       (*bl_micro_kernel)(
           k, min(m - i, DGEMM_MR), min(n - j, DGEMM_NR),
           //&packA[i * ldc], // assumes sq matrix, otherwise use lda
           //&packB[j],       //
 
           // what you should use after real packing routine implmemented
-          			      &packA[ i * k ],
-          			      &packB[ j * k ],
+          			      //&packA[ i * k ],
+          			      &packA[ i * DGEMM_KC ],
+          			      //&packB[ j * k ],
+          			      &packB[ j * DGEMM_KC ],
           &C[i * ldc + j], (unsigned long long)ldc, &aux);
 	#endif
     } // 1-th loop around micro-kernel
@@ -188,10 +212,8 @@ void bl_dgemm(int m, int n, int k, double *XA, int lda, double *XB, int ldb,
   // FIXME undef NOPACK when you implement packing
   //
 #ifndef NOPACK
-  packA = bl_malloc_aligned(DGEMM_KC, (DGEMM_MC / DGEMM_MR + 1) * DGEMM_MR,
-                            sizeof(double));
-  packB = bl_malloc_aligned(DGEMM_KC, (DGEMM_NC / DGEMM_NR + 1) * DGEMM_NR,
-                            sizeof(double));
+  packA = bl_malloc_aligned(DGEMM_KC, (DGEMM_MC / DGEMM_MR + 1) * DGEMM_MR, sizeof(double));
+  packB = bl_malloc_aligned(DGEMM_KC, (DGEMM_NC / DGEMM_NR + 1) * DGEMM_NR, sizeof(double));
 #endif
   //Testing begin
   //double *packX;
@@ -216,7 +238,10 @@ void bl_dgemm(int m, int n, int k, double *XA, int lda, double *XB, int ldb,
             pb,                       /* k */
             &XA[pc + lda * (ic + i)], /* XA - start of micropanel in A */
             k,                        /* ldXA */
-            &packA[0 * DGEMM_MC * pb + i * pb] /* packA */);
+            //&packA[0 * DGEMM_MC * pb + i * pb] /* packA */);
+            &packA[0 * DGEMM_MC * pb + i * DGEMM_KC] /* packA */);
+      //printf("\n%d %d %d %d %p\n",min(ib - i, DGEMM_MR),pb,DGEMM_MR,DGEMM_KC,&packA[0 * DGEMM_MC * pb + i * DGEMM_KC]);
+      //printMat(DGEMM_MR,DGEMM_KC,"packA",&packA[0 * DGEMM_MC * pb + i * DGEMM_KC]);
       }
 #endif
       for (jc = 0; jc < n; jc += DGEMM_NC) { // 3-rd loop around micro-kernel
@@ -231,8 +256,11 @@ void bl_dgemm(int m, int n, int k, double *XA, int lda, double *XB, int ldb,
               &XB[ldb * pc + jc +
                   j] /* XB - starting row and column for this panel */,
               n,             // should be ldXB instead /* ldXB */
-              &packB[j * pb] /* packB */
+              //&packB[j * pb] /* packB */
+              &packB[j * DGEMM_KC] /* packB */
           );
+      //printf("\n%d %d %d %d %p\n",pb, min(jb - j, DGEMM_NR), DGEMM_KC, DGEMM_NR, &packB[j * pb]);
+      //printMat(DGEMM_KC,DGEMM_NR,"packB",&packB[j * pb]);
         }
 #endif
 

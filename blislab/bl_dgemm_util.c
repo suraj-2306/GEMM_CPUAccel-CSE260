@@ -59,6 +59,7 @@ double *bl_malloc_aligned(
     int    err;
 
     err = posix_memalign( (void**)&ptr, (size_t)GEMM_SIMD_ALIGN_SIZE, size * m * n );
+    //memset(ptr, 0, size * m * n);
 
     if ( err ) {
         printf( "bl_malloc_aligned(): posix_memalign() failures" );
@@ -75,6 +76,7 @@ double *bl_malloc_aligned(
     //}
     //printf("--End--\n");
     //fflush(stdout);
+    //memset(ptr, 0, size * m * n);
 
     return ptr;
 }
