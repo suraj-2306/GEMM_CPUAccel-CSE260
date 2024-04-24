@@ -94,15 +94,23 @@ static void packA_mcxkc_d(int m, int k, double *restrict XA, int ldXA,
 		//{
 		//	packA[m*j+i] = XA[i*ldXA+j];
 		//}
-		if(m>>3 == 1){
-			*(packA + 8*j+0) = *(XA + 0*ldXA+j);
-			*(packA + 8*j+1) = *(XA + 1*ldXA+j);
-			*(packA + 8*j+2) = *(XA + 2*ldXA+j);
-			*(packA + 8*j+3) = *(XA + 3*ldXA+j);
-			*(packA + 8*j+4) = *(XA + 4*ldXA+j);
-			*(packA + 8*j+5) = *(XA + 5*ldXA+j);
-			*(packA + 8*j+6) = *(XA + 6*ldXA+j);
-			*(packA + 8*j+7) = *(XA + 7*ldXA+j);
+		if(m>>4 == 1){
+			*(packA + DGEMM_MR*j+0) = *(XA + 0*ldXA+j);
+			*(packA + DGEMM_MR*j+1) = *(XA + 1*ldXA+j);
+			*(packA + DGEMM_MR*j+2) = *(XA + 2*ldXA+j);
+			*(packA + DGEMM_MR*j+3) = *(XA + 3*ldXA+j);
+			*(packA + DGEMM_MR*j+4) = *(XA + 4*ldXA+j);
+			*(packA + DGEMM_MR*j+5) = *(XA + 5*ldXA+j);
+			*(packA + DGEMM_MR*j+6) = *(XA + 6*ldXA+j);
+			*(packA + DGEMM_MR*j+7) = *(XA + 7*ldXA+j);
+			*(packA + DGEMM_MR*j+8) = *(XA + 8*ldXA+j);
+			*(packA + DGEMM_MR*j+9) = *(XA + 9*ldXA+j);
+			*(packA + DGEMM_MR*j+10) = *(XA + 10*ldXA+j);
+			*(packA + DGEMM_MR*j+11) = *(XA + 11*ldXA+j);
+			*(packA + DGEMM_MR*j+12) = *(XA + 12*ldXA+j);
+			*(packA + DGEMM_MR*j+13) = *(XA + 13*ldXA+j);
+			*(packA + DGEMM_MR*j+14) = *(XA + 14*ldXA+j);
+			*(packA + DGEMM_MR*j+15) = *(XA + 15*ldXA+j);
 		}
 		else {
 			for(i=0;i<m;i++)
