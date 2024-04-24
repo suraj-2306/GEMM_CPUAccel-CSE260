@@ -1,0 +1,6 @@
+*.o
+data.txt
+gmon.out
+benchmark-blas
+benchmark-naive
+benchmark-blislab
