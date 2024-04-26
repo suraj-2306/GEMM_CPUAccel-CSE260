@@ -154,10 +154,11 @@ endif
 
 C++FLAGS += -DNO_BLAS
 CFLAGS += -DNO_BLAS
+CFLAGS += -g -DDEBUG
 
-ifeq ($(debug), 1)
-	CFLAGS += -g -DDEBUG
-endif
+#ifeq ($(debug), 1)
+#	CFLAGS += -g -DDEBUG
+#endif
 
 OPTIMIZATION = $(MY_OPT)
 
@@ -180,7 +181,7 @@ default : all
 all : clean $(targets)
 
 benchmark-naive : benchmark.o naive/dgemm-naive.o  $(UTIL)
-	$(CC) -o $@ $^ $(LDLIBS)
+	$(CC) -o $@ $^ $(LDLIBS) -static
 benchmark-blas : benchmark.o blas/dgemm-blas.o $(UTIL)
 	$(CC) -o $@ $^ $(LDLIBS) -static
 benchmark-blislab : $(BLISLAB:.c=.o) benchmark.o $(UTIL) 

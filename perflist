@@ -1,0 +1,422 @@
+  branch-instructions OR branches                    [Hardware event]
+  branch-misses                                      [Hardware event]
+  bus-cycles                                         [Hardware event]
+  cache-misses                                       [Hardware event]
+  cache-references                                   [Hardware event]
+  cpu-cycles OR cycles                               [Hardware event]
+  instructions                                       [Hardware event]
+  stalled-cycles-backend OR idle-cycles-backend      [Hardware event]
+  stalled-cycles-frontend OR idle-cycles-frontend    [Hardware event]
+  alignment-faults                                   [Software event]
+  bpf-output                                         [Software event]
+  cgroup-switches                                    [Software event]
+  context-switches OR cs                             [Software event]
+  cpu-clock                                          [Software event]
+  cpu-migrations OR migrations                       [Software event]
+  dummy                                              [Software event]
+  emulation-faults                                   [Software event]
+  major-faults                                       [Software event]
+  minor-faults                                       [Software event]
+  page-faults OR faults                              [Software event]
+  task-clock                                         [Software event]
+  duration_time                                      [Tool event]
+  user_time                                          [Tool event]
+  system_time                                        [Tool event]
+
+armv8_pmuv3_0:
+  L1-dcache-loads OR armv8_pmuv3_0/L1-dcache-loads/
+  L1-dcache-load-misses OR armv8_pmuv3_0/L1-dcache-load-misses/
+  L1-icache-loads OR armv8_pmuv3_0/L1-icache-loads/
+  L1-icache-load-misses OR armv8_pmuv3_0/L1-icache-load-misses/
+  dTLB-loads OR armv8_pmuv3_0/dTLB-loads/
+  dTLB-load-misses OR armv8_pmuv3_0/dTLB-load-misses/
+  iTLB-loads OR armv8_pmuv3_0/iTLB-loads/
+  iTLB-load-misses OR armv8_pmuv3_0/iTLB-load-misses/
+  branch-loads OR armv8_pmuv3_0/branch-loads/
+  branch-load-misses OR armv8_pmuv3_0/branch-load-misses/
+
+branch:
+  br_mis_pred
+       [Mispredicted or not predicted branch speculatively executed]
+  br_pred
+       [Predictable branch speculatively executed]
+
+bus:
+  bus_access
+       [Attributable Bus access]
+  bus_access_rd
+       [Bus access read]
+  bus_access_wr
+       [Bus access write]
+  bus_cycles
+       [Bus cycle]
+  cnt_cycles
+       [Constant frequency cycles]
+  cpu_cycles
+       [Cycle]
+
+cache:
+  dtlb_walk
+       [Access to data TLB causes a translation table walk]
+  itlb_walk
+       [Access to instruction TLB that causes a translation table walk]
+  l1d_cache
+       [Level 1 data cache access]
+  l1d_cache_inval
+       [L1D cache invalidate]
+  l1d_cache_lmiss_rd
+       [Level 1 data cache long-latency read miss]
+  l1d_cache_rd
+       [L1D cache access, read]
+  l1d_cache_refill
+       [Level 1 data cache refill]
+  l1d_cache_refill_inner
+       [L1D cache refill, inner]
+  l1d_cache_refill_outer
+       [L1D cache refill, outer]
+  l1d_cache_refill_rd
+       [L1D cache refill, read]
+  l1d_cache_refill_wr
+       [L1D cache refill, write]
+  l1d_cache_wb
+       [Attributable Level 1 data cache write-back]
+  l1d_cache_wb_clean
+       [L1D cache Write-Back, cleaning and coherency]
+  l1d_cache_wb_victim
+       [L1D cache Write-Back, victim]
+  l1d_cache_wr
+       [L1D cache access, write]
+  l1d_tlb
+       [Attributable Level 1 data or unified TLB access]
+  l1d_tlb_rd
+       [L1D tlb access, read]
+  l1d_tlb_refill
+       [Attributable Level 1 data TLB refill]
+  l1d_tlb_refill_rd
+       [L1D tlb refill, read]
+  l1d_tlb_refill_wr
+       [L1D tlb refill, write]
+  l1d_tlb_wr
+       [L1D tlb access, write]
+  l1i_cache
+       [Attributable Level 1 instruction cache access]
+  l1i_cache_lmiss
+       [Level 1 instruction cache long-latency read miss]
+  l1i_cache_refill
+       [Level 1 instruction cache refill]
+  l1i_tlb
+       [Attributable Level 1 instruction TLB access]
+  l1i_tlb_refill
+       [Attributable Level 1 instruction TLB refill]
+  l2d_cache
+       [Level 2 data cache access]
+  l2d_cache_allocate
+       [Attributable Level 2 data cache allocation without refill]
+  l2d_cache_inval
+       [L2D cache invalidate]
+  l2d_cache_lmiss_rd
+       [Level 2 data cache long-latency read miss]
+  l2d_cache_rd
+       [L2D cache access, read]
+  l2d_cache_refill
+       [Level 2 data refill]
+  l2d_cache_refill_rd
+       [L2D cache refill, read]
+  l2d_cache_refill_wr
+       [L2D cache refill, write]
+  l2d_cache_wb
+       [Attributable Level 2 data cache write-back]
+  l2d_cache_wb_clean
+       [L2D cache Write-Back, cleaning and coherency]
+  l2d_cache_wb_victim
+       [L2D cache Write-Back, victim]
+  l2d_cache_wr
+       [L2D cache access, write]
+  l2d_tlb
+       [Attributable Level 2 data or unified TLB access]
+  l2d_tlb_rd
+       [L2D cache access, read]
+  l2d_tlb_refill
+       [Attributable Level 2 data TLB refill]
+  l2d_tlb_refill_rd
+       [L2D cache refill, read]
+  l2d_tlb_refill_wr
+       [L2D cache refill, write]
+  l2d_tlb_wr
+       [L2D cache access, write]
+  l3d_cache
+       [Attributable Level 3 data cache access]
+  l3d_cache_allocate
+       [Attributable Level 3 data cache allocation without refill]
+  l3d_cache_lmiss_rd
+       [Level 3 data cache long-latency read miss]
+  l3d_cache_rd
+       [Attributable Level 3 data or unified cache access, read]
+  l3d_cache_refill
+       [Attributable Level 3 data cache refill]
+  ll_cache_miss_rd
+       [Last level cache miss, read]
+  ll_cache_rd
+       [Attributable Last level cache memory read]
+
+exception:
+  exc_dabort
+       [Exception taken, Data Abort and SError]
+  exc_fiq
+       [Exception taken, FIQ]
+  exc_hvc
+       [Exception taken, Hypervisor Call]
+  exc_irq
+       [Exception taken, IRQ]
+  exc_pabort
+       [Exception taken, Instruction Abort]
+  exc_smc
+       [Exception taken, Secure Monitor Call]
+  exc_svc
+       [Exception taken, Supervisor Call]
+  exc_taken
+       [Exception taken]
+  exc_trap_dabort
+       [Exception taken, Data Abort or SError not taken locally]
+  exc_trap_fiq
+       [Exception taken, FIQ not taken locally]
+  exc_trap_irq
+       [Exception taken, IRQ not taken locally]
+  exc_trap_other
+       [Exception taken, Other traps not taken locally]
+  exc_trap_pabort
+       [Exception taken, Instruction Abort not taken locally]
+  exc_undef
+       [Exception taken, Other synchronous]
+  memory_error
+       [Local memory error]
+
+instruction:
+  ase_inst_spec
+       [ASE operations speculatively executed]
+  ase_spec
+       [Operation speculatively executed, Advanced SIMD instruction]
+  br_immed_spec
+       [Branch speculatively executed, immediate branch]
+  br_indirect_spec
+       [Branch speculatively executed, indirect branch]
+  br_mis_pred_retired
+       [Instruction architecturally executed, mispredicted branch]
+  br_retired
+       [Instruction architecturally executed, branch]
+  br_return_spec
+       [Branch speculatively executed, procedure return]
+  cid_write_retired
+       [Instruction architecturally executed, condition code check pass, write
+        to CONTEXTIDR]
+  crypto_spec
+       [Operation speculatively executed, Cryptographic instruction]
+  dmb_spec
+       [Barrier speculatively executed, DMB]
+  dp_spec
+       [Operation speculatively executed, integer data processing]
+  dsb_spec
+       [Barrier speculatively executed, DSB]
+  exc_return
+       [Instruction architecturally executed, condition check pass, exception
+        return]
+  fp_fixed_ops_spec
+       [Non-scalable floating-point element Operations speculatively executed]
+  fp_scale_ops_spec
+       [Scalable floating-point element Operations speculatively executed]
+  inst_retired
+       [Instruction architecturally executed]
+  inst_spec
+       [Operation speculatively executed]
+  isb_spec
+       [Barrier speculatively executed, ISB]
+  ld_spec
+       [Operation speculatively executed, load]
+  ldrex_spec
+       [Exclusive operation speculatively executed, LDREX or LDX]
+  op_retired
+       [Micro-operation architecturally executed]
+  op_spec
+       [Micro-operation speculatively executed]
+  pc_write_spec
+       [Operation speculatively executed, software change of the PC]
+  rc_ld_spec
+       [Release consistency operation speculatively executed, Load-Acquire]
+  rc_st_spec
+       [Release consistency operation speculatively executed, Store-Release]
+  st_spec
+       [Operation speculatively executed, store]
+  strex_fail_spec
+       [Exclusive operation speculatively executed, STREX or STX fail]
+  strex_pass_spec
+       [Exclusive operation speculatively executed, STREX or STX pass]
+  strex_spec
+       [Exclusive operation speculatively executed, STREX or STX]
+  sve_inst_spec
+       [SVE operations speculatively executed]
+  sve_ldff_fault_spec
+       [SVE first-fault load operations speculatively executed which set FFR
+        bit to 0]
+  sve_ldff_spec
+       [SVE First-fault load Operations speculatively executed]
+  sve_pred_empty_spec
+       [SVE predicated operations with no active predicates speculatively
+        executed]
+  sve_pred_full_spec
+       [SVE predicated operations speculatively executed with all active
+        predicates]
+  sve_pred_partial_spec
+       [SVE predicated operations speculatively executed with partially active
+        predicates]
+  sve_pred_spec
+       [SVE predicated Operations speculatively executed]
+  sw_incr
+       [Instruction architecturally executed, Condition code check pass,
+        software increment]
+  ttbr_write_retired
+       [Instruction architecturally executed, Condition code check pass, write
+        to TTBR]
+  vfp_spec
+       [Operation speculatively executed, floating-point instruction]
+
+memory:
+  mem_access
+       [Data memory access]
+  mem_access_rd
+       [Data memory access, read]
+  mem_access_wr
+       [Data memory access, write]
+  remote_access
+       [Access to another socket in a multi-socket system]
+  unaligned_ld_spec
+       [Unaligned access, read]
+  unaligned_ldst_spec
+       [Unaligned access]
+  unaligned_st_spec
+       [Unaligned access, write]
+
+pipeline:
+  stall
+       [No operation sent for execution]
+  stall_backend
+       [No operation issued due to the backend]
+  stall_backend_mem
+       [Memory stall cycles]
+  stall_frontend
+       [No operation issued because of the frontend]
+  stall_slot
+       [No operation sent for execution on a slot]
+  stall_slot_backend
+       [No operation sent for execution on a slot due to the backend]
+  stall_slot_frontend
+       [No operation sent for execution on a slot due to the frontend]
+  rNNN                                               [Raw hardware event descriptor]
+  cpu/t1=v1[,t2=v2,t3 ...]/modifier                  [Raw hardware event descriptor]
+       [(see 'man perf-list' on how to encode it)]
+  mem:<addr>[/len][:access]                          [Hardware breakpoint]
+Error: failed to open tracing events directory
+  sdt_libc:cond_broadcast                            [SDT event]
+  sdt_libc:cond_destroy                              [SDT event]
+  sdt_libc:cond_init                                 [SDT event]
+  sdt_libc:cond_signal                               [SDT event]
+  sdt_libc:cond_wait                                 [SDT event]
+  sdt_libc:lll_lock_wait@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:lll_lock_wait@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:lll_lock_wait_private@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:lll_lock_wait_private@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:longjmp@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:longjmp@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:longjmp_target@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:longjmp_target@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:map_complete                              [SDT event]
+  sdt_libc:map_start                                 [SDT event]
+  sdt_libc:memory_arena_new@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_arena_new@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_arena_retry@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_arena_retry@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_arena_reuse@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_arena_reuse@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_arena_reuse_free_list@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_arena_reuse_free_list@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_arena_reuse_wait@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_arena_reuse_wait@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_calloc_retry@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_calloc_retry@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_heap_free@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_heap_free@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_heap_less@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_heap_less@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_heap_more@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_heap_more@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_heap_new@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_heap_new@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_malloc_retry@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_malloc_retry@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_arena_max@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_arena_max@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_arena_test@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_arena_test@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_free_dyn_thresholds@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_free_dyn_thresholds@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_mmap_max@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_mmap_max@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_mmap_threshold@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_mmap_threshold@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_mxfast@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_mxfast@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_perturb@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_perturb@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_top_pad@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_top_pad@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_mallopt_trim_threshold@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_mallopt_trim_threshold@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_memalign_retry@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_memalign_retry@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_realloc_retry@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_realloc_retry@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_sbrk_less@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_sbrk_less@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_sbrk_more@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_sbrk_more@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_tcache_double_free@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_tcache_double_free@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_tunable_tcache_count@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_tunable_tcache_count@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_tunable_tcache_max_bytes@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_tunable_tcache_max_bytes@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:memory_tunable_tcache_unsorted_limit@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:memory_tunable_tcache_unsorted_limit@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:mutex_acquired@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:mutex_acquired@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:mutex_clocklock_entry                     [SDT event]
+  sdt_libc:mutex_destroy                             [SDT event]
+  sdt_libc:mutex_entry@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:mutex_entry@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:mutex_init                                [SDT event]
+  sdt_libc:mutex_release@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:mutex_release@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:mutex_timedlock_acquired                  [SDT event]
+  sdt_libc:mutex_timedlock_entry                     [SDT event]
+  sdt_libc:pthread_create                            [SDT event]
+  sdt_libc:pthread_join                              [SDT event]
+  sdt_libc:pthread_join_ret                          [SDT event]
+  sdt_libc:pthread_start                             [SDT event]
+  sdt_libc:rdlock_acquire_read@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:rdlock_acquire_read@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:rdlock_entry@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:rdlock_entry@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:reloc_complete                            [SDT event]
+  sdt_libc:reloc_start                               [SDT event]
+  sdt_libc:rwlock_destroy                            [SDT event]
+  sdt_libc:rwlock_unlock@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:rwlock_unlock@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:setjmp@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:setjmp@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:unmap_complete                            [SDT event]
+  sdt_libc:unmap_start                               [SDT event]
+  sdt_libc:wrlock_acquire_write@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:wrlock_acquire_write@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]
+  sdt_libc:wrlock_entry@/home/ubuntu/pa1-kdivij-ssathyaprakash/benchmark-blislab(5779781d95db)[SDT event]
+  sdt_libc:wrlock_entry@/usr/lib/aarch64-linux-gnu/libc.so.6(9e27cf97f039)[SDT event]

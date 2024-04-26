@@ -45,6 +45,7 @@
  * */
 
 #include <stdio.h>
+#include <string.h>
 
 #include "bl_dgemm.h"
 #include "bl_dgemm_kernel.h"
@@ -94,6 +95,7 @@ static void packA_mcxkc_d(int m, int k, double *restrict XA, int ldXA,
 		//{
 		//	packA[m*j+i] = XA[i*ldXA+j];
 		//}
+
 		if(m>>4 == 1){
 			*(packA + DGEMM_MR*j+0) = *(XA + 0*ldXA+j);
 			*(packA + DGEMM_MR*j+1) = *(XA + 1*ldXA+j);

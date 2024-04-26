@@ -87,9 +87,16 @@ extern "C" {
 //#define DGEMM_MR 5
 //#define DGEMM_NR 6
 
+//Golden
+//#define DGEMM_MC 1024
+//#define DGEMM_KC 333
+//#define DGEMM_NC 314
+//#define DGEMM_MR 16
+//#define DGEMM_NR 4
+
 #define DGEMM_MC 1024
-#define DGEMM_KC 500
-#define DGEMM_NC 314
+#define DGEMM_KC 368
+#define DGEMM_NC 320
 #define DGEMM_MR 16
 #define DGEMM_NR 4
 #endif
