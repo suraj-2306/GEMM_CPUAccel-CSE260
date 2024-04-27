@@ -2,13 +2,13 @@
 
 # Check if the correct number of arguments are provided
 if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <memtest_executable> <size>"
+    echo "Usage: $0 <memtest_executable> -n <size>"
     exit 1
 fi
 
 # Assign command-line arguments to variables
 memtest_executable="$1"
-size="$2"
+size="$3"
 
 # Run perf stat with the specified events and memtest arguments
 perf stat -a -e task-clock,cycles,instructions,branch-misses \
